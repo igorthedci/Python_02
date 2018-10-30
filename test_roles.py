@@ -78,7 +78,7 @@ class RolePositiveTests(unittest.TestCase):
                 #
                 response = requests.put(self.url + '/' + str(body["id"]))
                 body = response.json()
-                self.assertEqual(response.status_code, 201)  # check code === 201
+                self.assertEqual(response.status_code, 200)  # check code === 200
                 for key in role:
                     self.assertEqual(str(role[key]).strip(), str(body[key]))
         return True

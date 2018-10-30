@@ -29,6 +29,10 @@ class OurClassTest(unittest.TestCase):
                 self.assertEqual(n % 2, 0)
 
 
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)
+
 # unittest.main(verbosity=3)
 # test1 = OurClass("some_method")
 # test2 = OurClass("some_method_2")

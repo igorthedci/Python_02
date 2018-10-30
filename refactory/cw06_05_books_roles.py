@@ -15,3 +15,7 @@ print(r2.url)
 # print(r2.json())
 # r2_dict = r2.json()
 # print(r2_dict)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2)

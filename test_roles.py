@@ -16,7 +16,8 @@ HW06_01
 9● Попробуйте воспользоваться http.client вместо requests. Ощутите разницу
 """
 
-class RolesTests(unittest.TestCase):
+
+class RoleTests(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
@@ -36,8 +37,6 @@ class RolesTests(unittest.TestCase):
         return
 
 # 1● Создаёт персонажа POST /roles/, вы запоминаете его id.
-# 2● Проверяете, что он создался и доступен по ссылке GET /roles/[id]
-# 3● Проверяете, что он есть в списке персонажей по GET /roles/
     def test_role_create(self):
         for role in self.roles:
             with self.subTest(role=role):
@@ -48,10 +47,51 @@ class RolesTests(unittest.TestCase):
                 #
                 for key in role:
                     self.assertEqual(str(role[key]).strip(), str(body[key]))
+        return True
+
+# 2● Проверяете, что персонаж создался и доступен по ссылке GET /roles/[id]
+    def test_role_read(self):
+        for role in self.roles:
+            with self.subTest(role=role):
+                response = requests.post(self.url, data=role)  # create an item
+                body = response.json()
+                self.role_ids.append(body["id"])  # save id for tearDown()
                 #
                 body = requests.get(self.url + '/' + str(body["id"])).json()
                 for key in role:
                     self.assertEqual(str(role[key]).strip(), str(body[key]))
+        return True
+
+# 4● Изменяете этого персонажа методом PUT roles/[id]
+    def test_role_update(self):
+        for role in self.roles:
+            with self.subTest(role=role):
+                response = requests.post(self.url, data=role)  # create an item
+                body = response.json()
+                self.role_ids.append(body["id"])  # save id for tearDown()
+                #
+                for key in body:
+                    if str(body[key]).isalpha():
+                        body[key] += 'update'
+                #
+                body = requests.put(self.url + '/' + str(body["id"])).json()
+                for key in role:
+                    self.assertEqual(str(role[key]).strip(), str(body[key]))
+        return True
+
+# 7● Удаляете этого персонажа методом DELETE roles/[id]
+    def test_role_delete(self):
+        for role in self.roles:
+            with self.subTest(role=role):
+                response = requests.post(self.url, data=role)  # create an item
+                body = response.json()
+                self.role_ids.append(body["id"])  # save id for tearDown()
+                #
+                response = requests.delete(self.url + '/' + str(body["id"]))
+                self.assertEqual(response.status_code, 204)  # check code === 204
+                #
+                response = requests.delete(self.url + '/' + str(body["id"]))
+                self.assertEqual(response.status_code, 404)  # check code === 404
         return True
 
 

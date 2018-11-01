@@ -27,6 +27,8 @@ class RolePositiveTests(unittest.TestCase):
     def setUp(self):
         self.roles = [
             {'name': 'Name1', 'type': 'type1', 'level': 1, 'book': 2},
+            {'level': 1, 'book': 2, 'name': 'Name1', 'type': 'type1'},
+            {'name': 'Name2 Name2', 'type': 'type2 type2', 'level': 1, 'book': 2}
         ]
         self.role_ids = []
         return
@@ -126,11 +128,11 @@ class RoleNegativeTests(unittest.TestCase):
         return
 
     def isRoleValid(self, role={}):
-        if len(role) != 4:
+        if len(role) != 4:   # all role elements are present
             return False
         akeys = role.keys()
         for akey in akeys:
-            if akey not in self.keys:
+            if akey not in self.keys:  # role keys are matched with expected list
                 return False
         # check NAME, TYPE
         for i in range(2):
@@ -150,7 +152,8 @@ class RoleNegativeTests(unittest.TestCase):
         #
         return True
 
-# 1● Создаёт персонажа POST /roles/, вы запоминаете его id.
+# 1● Создаёт персонажа POST /roles/ с некорректными данными
+#    @unittest.expectedFailure
     def test_role_create(self):
         for role in self.invalid_roles:
             with self.subTest(role=role):
@@ -160,9 +163,10 @@ class RoleNegativeTests(unittest.TestCase):
                     body = response.json()
                     self.role_ids.append(body["id"])  # save id for tearDown()
                     print(body)
+#                self.assertEqual(response.status_code, 201)  # check code === 201
                 self.assertNotEqual(response.status_code, 201)  # check code === 201
                 #
-        return True
+        return False
 
 # 2● Проверяете, что отсутствующий персонаж недоступен по ссылкам GET/PUT/DELETE /roles/[id]
     def test_role_read(self):
@@ -189,4 +193,13 @@ class RoleNegativeTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+
+    roles_positive_suite = unittest.TestLoader().loadTestsFromTestCase(RolePositiveTests)
+    result = roles_positive_suite.run()
+    print(result)
+#
+    roles_negative_suite = unittest.TestLoader().loadTestsFromTestCase(RoleNegativeTests)
+    result = roles_negative_suite.run()
+    print(result)
+#
+    unittest.main()

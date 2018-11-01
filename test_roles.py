@@ -1,5 +1,6 @@
 import requests
 import unittest
+from HtmlTestRunner import HTMLTestRunner
 """
 HW06_01
 Тестовое приложение с REST API ​ ttp://pulse-rest-testing.herokuapp.com/
@@ -202,4 +203,6 @@ if __name__ == "__main__":
     result = roles_negative_suite.run()
     print(result)
 #
-    unittest.main()
+    unittest.main(testRunner=HTMLTestRunner(output=r'./reports'))
+    result = unittest.TestResult()
+    print(result)

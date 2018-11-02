@@ -1,5 +1,6 @@
 import requests
 import unittest
+from HtmlTestRunner import HTMLTestRunner
 
 
 class BaseTests(unittest.TestCase):
@@ -34,4 +35,10 @@ class BaseTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    unittest.main(verbosity=2, testRunner=HTMLTestRunner(output=r"./"))
+    # unittest.main(testRunner=HTMLTestRunner(output=r"./"))
+    #
+    # base_tests = unittest.TestLoader().loadTestsFromTestCase(BaseTests)
+    # result = unittest.TestResult()
+    # base_tests.run(result)
+    # print(result)

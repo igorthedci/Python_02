@@ -195,15 +195,5 @@ class RoleNegativeTests(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    unittest.main(testRunner=HTMLTestRunner(output=r'./'))
 
-    roles_positive_suite = unittest.TestLoader().loadTestsFromTestCase(RolePositiveTests)
-    result = roles_positive_suite.run()
-    print(result)
-#
-    roles_negative_suite = unittest.TestLoader().loadTestsFromTestCase(RoleNegativeTests)
-    result = roles_negative_suite.run()
-    print(result)
-#
-    unittest.main(testRunner=HTMLTestRunner(output=r'./reports'))
-    result = unittest.TestResult()
-    print(result)

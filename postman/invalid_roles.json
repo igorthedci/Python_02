@@ -1,0 +1,6 @@
+[
+    {'name': '', 'type': 'type1', 'level': 1, 'book': 2},
+    {'name': 'Name1', 'type': '', 'level': 1, 'book': 2},
+    {'name': 'Name1', 'type': 'type1', 'level': 1, 'book': 0},
+	{'name': 'Name1', 'type': 'type1', 'level': 'aasd', 'book': 2}
+]

@@ -24,6 +24,7 @@ class RolePositiveTests(unittest.TestCase):
     def setUpClass(cls):
         cls.base_url = "http://pulse-rest-testing.herokuapp.com"
         cls.url = cls.base_url + "/roles"
+        return True
 
     def setUp(self):
         self.roles = [
@@ -32,12 +33,12 @@ class RolePositiveTests(unittest.TestCase):
             {'name': 'Name2 Name2', 'type': 'type2 type2', 'level': 1, 'book': 2}
         ]
         self.role_ids = []
-        return
+        return True
 
     def tearDown(self):
         for role_id in self.role_ids:
             requests.delete(self.url + "/" + str(role_id))
-        return
+        return True
 
 # 1● Создаёт персонажа POST /roles/, вы запоминаете его id.
     def test_role_create(self):
